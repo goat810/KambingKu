@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KambingKu | Jual Kambing Qurban</title>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+      color: #333;
+      padding-top: 70px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    nav {
+      background-color: #2e7d32;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 999;
+    }
+
+    .logo {
+      font-weight: bold;
+      font-size: 1.5em;
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      height: 3px;
+      width: 25px;
+      background: white;
+      margin: 4px 0;
+      border-radius: 2px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .nav-links.active {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 65px;
+      left: 0;
+      width: 100%;
+      background-color: #2e7d32;
+      padding: 10px 20px;
+    }
+
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: flex;
+      }
+
+      .nav-links {
+        display: none;
+        width: 100%;
+      }
+
+      nav ul {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      nav ul li a {
+        padding: 10px 0;
+        display: block;
+        width: 100%;
+      }
+
+      .carousel {
+        width: 95%;
+      }
+
+      .carousel img {
+        height: 200px;
+      }
+
+      .product-grid {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .product-card {
+        width: 90%;
+      }
+
+      .wa-buttons {
+        flex-direction: row;  /* Ubah jadi row agar sejajar */
+        gap: 15px;
+        justify-content: center;
+      }
+
+      .wa-buttons img {
+        width: 60px;
+        height: 60px;
+      }
+
+      .testi-boxes {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .testi {
+        width: 90%;
+      }
+
+      .slider {
+        padding-bottom: 20px;
+      }
+    }
+
+    .hero,
+    .product-list,
+    .about,
+    .testimonial,
+    .order-form {
+      max-width: 1200px;
+      margin: auto;
+      text-align: center;
+    }
+
+    .hero {
+      background: linear-gradient(to right, #388e3c, #66bb6a);
+      color: white;
+      padding: 80px 20px;
+    }
+
+    .cta-button {
+      background: #fff;
+      color: #388e3c;
+      padding: 10px 20px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .slider {
+      padding: 30px 0;
+      text-align: center;
+      background-color: #e8f5e9;
+    }
+
+    .carousel {
+      position: relative;
+      width: 80%;
+      margin: auto;
+      max-width: 600px;
+    }
+
+    .slide {
+      display: none;
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .slide.active {
+      display: block;
+    }
+
+    .carousel img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .product-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    .product-card {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 300px;
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+
+    .wa-buttons {
+      display: flex;
+      flex-direction: row;
+      gap: 30px;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .wa-buttons img {
+      width: 70px;
+      height: 70px;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+
+    .testi-boxes {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .testi {
+      background: #fff;
+      border-left: 5px solid #4caf50;
+      padding: 15px;
+      width: 250px;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+    }
+
+    footer {
+      background: #eee;
+      text-align: center;
+      padding: 20px;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .swal2-styled {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">KambingKu</div>
+    <div class="menu-toggle" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#produk">Produk</a></li>
+      <li><a href="#tentang">Tentang</a></li>
+      <li><a href="#testimoni">Testimoni</a></li>
+      <li><a href="#pesan">Pesan</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <h1>Selamat Datang di KambingKu</h1>
+    <p>Solusi hewan qurban dan ternak terbaik untuk Anda!</p>
+    <br>
+    <a href="#produk" class="cta-button">Lihat Kambing</a>
+  </header>
+
+  <section class="slider">
+    <h2>Galeri Peternakan</h2>
+    <div class="carousel">
+      <img src="img/goat2.jpg" alt="Kambing 1" class="slide active">
+      <img src="img/goat1.jpg" alt="Kambing 2" class="slide">
+      <img src="img/goat4.jpg" alt="Kambing 3" class="slide">
+      <img src="img/goat5.jpg" alt="Kambing 4" class="slide">
+      <img src="img/goat6.jpg" alt="Kambing 5" class="slide">
+      <img src="img/goat7.jpg" alt="Kambing 6" class="slide">
+      <img src="img/goat8.jpg" alt="Kambing 7" class="slide">
+      <img src="img/goat3.jpg" alt="Kambing 8" class="slide">
+    </div>
+  </section>
+  <br>
+  <br>
+  <section id="produk" class="product-list">
+    <h2>Daftar Kambing Unggulan</h2>
+    <div class="product-grid">
+      <div class="product-card"><h3>Kambing 25-30 kg</h3><p>Start from : Rp 3.000.000</p></div>
+      <div class="product-card"><h3>Kambing 35-40 kg</h3><p>Rp 3.750.000</p></div>
+      <div class="product-card"><h3>Kambing 40-50 kg</h3><p>Rp 4.250.000</p></div>
+      <div class="product-card"><h3>Kambing 50-60 kg</h3><p>Rp 5.850.000</p></div>
+      <div class="product-card"><h3>Kambing 60+ kg</h3><p>Rp 7.000.000</p></div>
+    </div>
+  </section>
+  <br>
+  <br>
+  <br>
+  <section id="tentang" class="about">
+    <h2>Tentang Kami</h2>
+    <p>Dengan pengalaman lebih, KambingKu hadir sebagai mitra terpercaya dalam menyediakan kambing sehat dan siap qurban.</p>
+  </section>
+  <br>
+  <br>
+  <br>
+  <section id="testimoni" class="testimonial">
+    <h2>Apa Kata Pelanggan?</h2>
+    <div class="testi-boxes">
+      <div class="testi"><p>"Kambingnya besar, sehat, dan diantar tepat waktu."</p><strong>– Budi, Bekasi</strong></div>
+      <div class="testi"><p>"Pesan 3 ekor, semua sesuai foto."</p><strong>– Rina, Jakarta</strong></div>
+      <div class="testi"><p>"Peternakan terpercaya, semoga jadi langganan."</p><strong>– Hasan, Tangerang</strong></div>
+    </div>
+  </section>
+  <br>
+  <br>
+  <br>
+  <section id="pesan" class="order-form">
+    <h2>Pesan Sekarang Lewat WhatsApp atau Instagram</h2>
+    <div class="wa-buttons">
+      <a href="https://wa.me/62895321857895?text=Halo%2C%20saya%20ingin%20memesan%20*Kambing*" target="_blank">
+        <img src="img/logo-wa.png" alt="WhatsApp">
+      </a>
+      <a href="https://www.instagram.com/kambing.kuu/" target="_blank">
+        <img src="img/logo-ig.png" alt="Instagram">
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 KambingKu - Peternakan Kambing</p>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const nav = document.querySelector('.nav-links');
+      nav.classList.toggle('active');
+    }
+
+    // Tutup menu saat klik link (mobile)
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.querySelector('.nav-links').classList.remove('active');
+      });
+    });
+
+    // Slider otomatis
+    let slideIndex = 0;
+    setInterval(() => {
+      const slides = document.querySelectorAll('.slide');
+      slides.forEach(slide => slide.classList.remove('active'));
+      slideIndex = (slideIndex + 1) % slides.length;
+      slides[slideIndex].classList.add('active');
+    }, 3000);
+
+    // SweetAlert galeri
+    const galleryImages = document.querySelectorAll('.carousel img');
+    let currentGalleryIndex = 0;
+
+    function showGalleryImage(index) {
+      const img = galleryImages[index];
+      Swal.fire({
+        title: img.alt || 'Galeri Peternakan',
+        html: `
+          <img src="${img.src}" style="max-width:90vw; max-height:70vh; border-radius:10px;" />
+          <br><br>
+          <div style="display:flex; justify-content:space-between; gap:20px; max-width:300px; margin:auto;">
+            <button type="button" id="prevImage" class="swal2-styled">⬅ Sebelumnya</button>
+            <button type="button" id="nextImage" class="swal2-styled">Selanjutnya ➡</button>
+          </div>
+        `,
+        showCloseButton: true,
+        showConfirmButton: false,
+        didRender: () => {
+          document.getElementById('prevImage').onclick = () => {
+            currentGalleryIndex = (currentGalleryIndex - 1 + galleryImages.length) % galleryImages.length;
+            showGalleryImage(currentGalleryIndex);
+          };
+          document.getElementById('nextImage').onclick = () => {
+            currentGalleryIndex = (currentGalleryIndex + 1) % galleryImages.length;
+            showGalleryImage(currentGalleryIndex);
+          };
+        }
+      });
+    }
+
+    galleryImages.forEach((img, i) => {
+      img.addEventListener('click', () => {
+        currentGalleryIndex = i;
+        showGalleryImage(currentGalleryIndex);
+      });
+    });
+  </script>
+
+</body>
+</html>
